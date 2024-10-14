@@ -1,4 +1,4 @@
-FROM ubuntu:noble-20240801
+FROM ubuntu:noble-20241009
 
 # Add user
 RUN set -ex ;\
