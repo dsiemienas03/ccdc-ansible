@@ -21,6 +21,7 @@ jobs:
 
       - run: pip install -r config/requirements.txt
       - run: ansible-galaxy collection install -r config/requirements.yml
+      - run: ansible-galaxy collection build dsu/ccdc/ ; ansible-galaxy collection install --offline dsu-ccdc-1.0.0.tar.gz ;
 
       - name: Run ansible-lint
         uses: ansible/ansible-lint@v24.9.2 # or version tag instead of 'main'
