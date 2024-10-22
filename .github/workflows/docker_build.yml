@@ -140,7 +140,7 @@ jobs:
       - name: Docker Scout
         id: docker-scout
         uses: docker/scout-action@v1
-        if: github.event_name == 'pull_request' && github.event.action != 'merge'
+        if: github.event.pull_request.merged != true
         with:
           # command: cves,recommendations,compare
           command: compare
