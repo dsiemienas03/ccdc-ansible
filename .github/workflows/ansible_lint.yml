@@ -3,6 +3,8 @@ name: Ansible Lint
 on:
   release:
     types: [published, prereleased, released]
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
