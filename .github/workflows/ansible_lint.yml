@@ -16,15 +16,15 @@ jobs:
       - name: Setup python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.12'
+          python-version: "3.12"
           cache: "pip"
 
       - run: pip install -r config/requirements.txt
+      - run: ansible-galaxy collection install -r config/requirements.yml
 
       - name: Run ansible-lint
         uses: ansible/ansible-lint@v24.9.2 # or version tag instead of 'main'
         with:
           args: ""
           setup_python: false
-          working_directory: "dsu"
-          requirements_file: "config/requirements.yml"
+          working_directory: "dsu/"
