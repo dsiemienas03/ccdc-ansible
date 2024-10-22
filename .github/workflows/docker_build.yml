@@ -91,10 +91,18 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        # if: github.event.action == 'opened' || github.event.action == 'reopened'
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
       - name: Docker Scout
         id: docker-scout
         uses: docker/scout-action@v1
-        if: github.event.action == 'opened' || github.event.action == 'reopened'
+        # if: github.event.action == 'opened' || github.event.action == 'reopened'
         with:
           # command: cves,recommendations,compare
           command: compare
