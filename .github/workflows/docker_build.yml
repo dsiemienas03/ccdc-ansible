@@ -95,7 +95,7 @@ jobs:
   scout:
     runs-on: ubuntu-latest
     needs: build
-    if: github.event.action == 'opened' || github.event.action == 'reopened'
+    # if: github.event.action == 'opened' || github.event.action == 'reopened'
     permissions:
       contents: read
       packages: write
