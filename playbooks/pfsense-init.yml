@@ -1,0 +1,11 @@
+---
+  hosts: pfsense
+  connection: local
+  ignore_errors: true
+  roles:
+    - dsu.ccdc.pfsense
+  tasks:
+    - name: Include role
+      ansible.builtin.include_role:
+        name: dsu.ccdc.pfsense
+        vars_from: main.yml

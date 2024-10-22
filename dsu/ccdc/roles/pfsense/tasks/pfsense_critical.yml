@@ -1,6 +1,6 @@
 ---
 # pfSense critical block rules
-- name: Anti-lockout rule
+- name: pfsense_critical | Anti-lockout rule
   pfsensible.core.pfsense_rule:
     name: anti-lockout
     action: pass
@@ -12,7 +12,7 @@
     destination_port: 443
     state: present
 
-- name: Add Internal DNS out rule
+- name: pfsense_critical | Add Internal DNS out rule
   pfsensible.core.pfsense_rule:
     name: outbound-dns
     action: pass
@@ -25,9 +25,22 @@
     after: anti-lockout
     state: present
 
-- name: Add Internal web out rule
+- name: pfsense_critical | Add Internal web out rule
   pfsensible.core.pfsense_rule:
-    name: "outbound-web"
+    name: "outbound-http"
+    action: pass
+    interface: WAN
+    ipprotocol: inet
+    protocol: tcp
+    source: LAN
+    destination: any
+    destination_port: 80
+    after: anti-lockout
+    state: present
+
+- name: pfsense_critical | Add Internal web out rule
+  pfsensible.core.pfsense_rule:
+    name: "outbound-https"
     action: pass
     interface: WAN
     ipprotocol: inet
