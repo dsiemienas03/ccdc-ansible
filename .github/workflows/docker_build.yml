@@ -110,7 +110,7 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-
+      - run: echo ${{ needs.build.outputs.beta_image }}
       - name: Docker Scout
         id: docker-scout
         uses: docker/scout-action@v1
