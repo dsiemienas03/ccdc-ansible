@@ -38,12 +38,6 @@ version-resolver:
 template: |
   ## Download
   ```bash
-  docker pull ghcr.io/dsiemienas03/ccdc-ansible:$CURRNET_MAJOR_VERSION
-  ```
-  ```bash
-  docker pull ghcr.io/dsiemienas03/ccdc-ansible:$CURRENT_MINOR_VERISON
-  ```
-  ```bash
   docker pull ghcr.io/dsiemienas03/ccdc-ansible:$NEXT_PATCH_VERSION
   ```
 
