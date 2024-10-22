@@ -23,6 +23,6 @@ jobs:
         uses: ansible/ansible-lint@v24.9.2 # or version tag instead of 'main'
         with:
           args: ""
-          setup_python: true
+          setup_python: false
           working_directory: "dsu"
           requirements_file: "config/requirements.yml"
