@@ -28,4 +28,4 @@ jobs:
         with:
           args: ""
           setup_python: false
-          working_directory: "dsu/"
+          working_directory: "dsu/ccdc/"
