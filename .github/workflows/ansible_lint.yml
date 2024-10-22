@@ -28,4 +28,3 @@ jobs:
           args: ""
           setup_python: false
           working_directory: "dsu/"
-          requirements_file: "config/requirements.yml"
