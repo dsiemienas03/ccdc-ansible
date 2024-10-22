@@ -112,7 +112,8 @@
     log_type: decryption
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
-- name: logging | Set initial logging as done
+- name: logging | Set logging complete
   ansible.builtin.set_fact:
-    config_logging: false
+    palo_config_logging: false
     cacheable: true
+  when: palo_config_logging

@@ -1,4 +1,4 @@
-- name: palo_service | Add service rules
+- name: palo_service | Add service rules for {{ service.key }}
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
     rule_name: "inbound-{{ service.key }}{{ item.key }}"
@@ -6,7 +6,7 @@
     source_ip: [any]
     destination_zone: ["{{ item.value | default('lan') }}"]
     destination_ip: ["{{ item.value.ip |  default(fw_net ~ item.key) }}"]
-    application: "{{ palo.svc[service.key] }}"
+    application: "{{ palo_svc[service.key] }}"
     action: allow
     location: before
     existing_rule: inbound-all

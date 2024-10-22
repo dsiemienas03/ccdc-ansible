@@ -11,14 +11,14 @@
   ansible.builtin.debug:
     var: vm_info
 
-- name: nic | Change NIC for VMs
+- name: nic | Change NIC for VMs item.guest_name
   delegate_to: localhost
   community.vmware.vmware_guest:
     hostname: "{{ inventory_hostname }}"
     username: "{{ esxi_user }}"
     password: "{{ esxi_password }}"
     validate_certs: false
-    name: '{{ item.guest_name }}'
+    name: "{{ item.guest_name }}"
     # name: test
     networks:
       - name: protected

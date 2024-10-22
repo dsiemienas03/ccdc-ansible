@@ -94,7 +94,7 @@
     application: [any]
     action: allow
     location: after
-    existing_rule: inbound-rdp
+    existing_rule: inbound-sql
     log_start: true
     log_end: true
     log_setting: "Loggie McLog Face"

@@ -6,44 +6,37 @@
     value: "{{ fw_mask }}"
 
 - name: address | Add Remote address
+  when: remote_mask is defined
   paloaltonetworks.panos.panos_address_object:
     provider: "{{ provider }}"
     name: remote
     value: "{{ remote_mask }}"
 
 - name: address | Add ESXI address
-  when: ("esx" in item.value.svc)
   paloaltonetworks.panos.panos_address_object:
     provider: "{{ provider }}"
     name: "esx{{  item.key }}"
     value: "{{ item.value.ip |  default(fw_net ~ item.key) }}"
-  loop: "{{ services.palo | dict2items }}"
+  loop: "{{ services.palo.esx | dict2items }}"
 
 - name: address | Add windows server address group
-  when: ("dc" in item.value.svc)
   paloaltonetworks.panos.panos_address_group:
     provider: "{{ provider }}"
     name: windc
     dynamic_value: dc
-  loop: "{{ services.palo | dict2items }}"
+  loop: "{{ services.palo.dc | dict2items }}"
 
 - name: address | Add esx address group
-  when: ( "esx" in item.value.svc)
   paloaltonetworks.panos.panos_address_group:
     provider: "{{ provider }}"
     name: esxi
     dynamic_value: esx
-  loop: "{{ services.palo | dict2items }}"
+  loop: "{{ services.palo.esx | dict2items }}"
 
 - name: address | Add windows address group
-  when: ("windows" in item.value.svc) or ("dc" in item.value.svc)
+  when: services.palo.win is defined
   paloaltonetworks.panos.panos_address_group:
     provider: "{{ provider }}"
     name: windows
     dynamic_value: windows
-  loop: "{{ services.palo | dict2items }}"
-
-- name: address | Set initial groups to complete
-  ansible.builtin.set_fact:
-    palo_config_initial_groups: false
-    cacheable: true
+  loop: "{{ services.palo.win | dict2items }}"

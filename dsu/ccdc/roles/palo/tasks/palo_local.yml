@@ -38,24 +38,6 @@
     tag_name: [local]
   loop: "{{ services.palo.esx | dict2items }}"
 
-- name: palo_local | Block WAN to DC
-  paloaltonetworks.panos.panos_security_rule:
-    provider: "{{ provider }}"
-    rule_name: inbound-dc{{ item.key }}
-    source_zone: [wan]
-    source_ip: [any]
-    destination_zone: ["{{ item.value | default('lan') }}"]
-    destination_ip: ["{{ item.value.ip |  default(fw_net ~ item.key) }}"]
-    application: [windc]
-    action: deny
-    location: before
-    existing_rule: tmp-block
-    group_profile: security
-    log_start: true
-    log_end: true
-    log_setting: "Loggie McLog Face"
-    tag_name: [Block]
-  loop: "{{ services.palo.dc | dict2items }}"
 
 - name: palo_local | Block WAN to ESXI
   paloaltonetworks.panos.panos_security_rule:
@@ -75,3 +57,60 @@
     log_setting: "Loggie McLog Face"
     tag_name: [Block]
   loop: "{{ services.palo.esx | dict2items }}"
+
+- name: palo_local | LAN to remote network
+  when: remote_mask is defined
+  paloaltonetworks.panos.panos_security_rule:
+    provider: "{{ provider }}"
+    rule_name: outbound-remote
+    source_zone: [lan]
+    source_ip: [any]
+    destination_zone: [wan]
+    destination_ip: ["{{ remote_mask }}"]
+    application: [web-browsing, ssl, ssh, ms-rdp]
+    action: allow
+    location: before
+    existing_rule: tmp-block
+    group_profile: security
+    log_start: true
+    log_end: true
+    log_setting: "Loggie McLog Face"
+    tag_name: [local]
+
+- name: palo_local | Remote network to lan
+  when: remote_mask is defined
+  paloaltonetworks.panos.panos_security_rule:
+    provider: "{{ provider }}"
+    rule_name: inbound-remote
+    source_zone: [wan]
+    source_ip: ["{{ remote_mask }}"]
+    destination_zone: [lan]
+    destination_ip: ["{{ wazuh }}"]
+    application: [wazuh-agent, syslog]
+    action: allow
+    location: before
+    existing_rule: tmp-block
+    group_profile: security
+    log_start: true
+    log_end: true
+    log_setting: "Loggie McLog Face"
+    tag_name: [local]
+
+- name: palo_local | Block WAN to DC
+  paloaltonetworks.panos.panos_security_rule:
+    provider: "{{ provider }}"
+    rule_name: inbound-dc{{ item.key }}
+    source_zone: [wan]
+    source_ip: [any]
+    destination_zone: ["{{ item.value | default('lan') }}"]
+    destination_ip: ["{{ item.value.ip |  default(fw_net ~ item.key) }}"]
+    application: [windc]
+    action: deny
+    location: before
+    existing_rule: tmp-block
+    group_profile: security
+    log_start: true
+    log_end: true
+    log_setting: "Loggie McLog Face"
+    tag_name: [Block]
+  loop: "{{ services.palo.dc | dict2items }}"

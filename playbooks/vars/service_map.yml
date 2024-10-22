@@ -1,8 +1,5 @@
 ---
 palo:
-  zones:
-    # ethernet1/1:
-      # zone: 1
   svc:
     esx:
       - vmware
@@ -11,6 +8,8 @@ palo:
       - windc
     dns:
       - dns
+    ftp:
+      - ftp
     ssh:
       - ssh
     pop:
@@ -24,9 +23,7 @@ palo:
       - smtp
 
 cisco:
-  zones:
-    # ethernet1/1:
-      # zone: dc
+  svc:
 
 fw_block:
   - esx

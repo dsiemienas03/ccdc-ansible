@@ -1,4 +1,8 @@
 ---
+- name: rules | Add tags
+  ansible.builtin.include_tasks: tags.yml
+  when: palo_config_initial_rules
+
 - name: rules | Add CCDC firewall Rules
   ansible.builtin.include_tasks: palo_ccdc.yml
   when: palo_config_initial_rules
@@ -15,12 +19,9 @@
     cacheable: true
   when: palo_config_initial_rules
 
+
 - name: rules | Add local firewall Rules
   ansible.builtin.include_tasks: palo_local.yml
-
-- name: rules | Add remote network rules
-  when: remote_net is defined
-  ansible.builtin.include_tasks: palo_remote.yml
 
 - name: rules | Add service rules
   when: service.key not in fw_block
