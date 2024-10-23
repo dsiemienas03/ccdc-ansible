@@ -30,10 +30,9 @@
     datacenter: "{{ item.datacenter }}"
     validate_certs: false
     name: '{{ item.guest_name }}'
-  loop: "{{ vm_info.virtual_machines | list }}"
   register: snapshot_info
+  loop: "{{ vm_info.virtual_machines | list }}"
 
 - name: snapshot | Print snapshot info
   ansible.builtin.debug:
     var: snapshot_info
-  loop: "{{ vm_info.virtual_machines | list }}"

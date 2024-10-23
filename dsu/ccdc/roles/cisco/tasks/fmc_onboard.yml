@@ -1,0 +1,78 @@
+- name: FMC Onboard FTD
+  hosts: fmc
+  connection: httpapi
+
+  tasks:
+    - name: Task01 - Get User Domain
+      cisco.fmcansible.fmc_configuration:
+        operation: getAllDomain
+        filters:
+          name: "{{ user.domain }}"
+        register_as: domain
+
+    - name: Task02 - Create ACP TEMP_ACP
+      cisco.fmcansible.fmc_configuration:
+        operation: "createAccessPolicy"
+        data:
+          type: "AccessPolicy"
+          name: "{{accesspolicy_name | default(onboard.acp_name) }}"
+          defaultAction:
+            {
+              "action": "PERMIT",
+              "logEnd": true,
+              "logBegin": false,
+              "sendEventsToFMC": true,
+            }
+        path_params:
+          domainUUID: "{{ domain[0].uuid }}"
+
+    - name: Task03 - Get Access Policy
+      cisco.fmcansible.fmc_configuration:
+        operation: getAllAccessPolicy
+        path_params:
+          domainUUID: "{{ domain[0].uuid }}"
+        filters:
+          name: "{{ onboard.acp_name }}"
+        register_as: access_policy
+
+    - name: Task04 - Add New FTD1
+      cisco.fmcansible.fmc_configuration:
+        operation: createMultipleDevice
+        data:
+          hostName: "{{ ftd_ip | default(item.key) }}"
+          license_caps:
+            - "BASE"
+          ftdMode: "ROUTED"
+          type: Device
+          regKey: "{{ reg_key | default(device_name.ftd1_reg_key) }}"
+          performanceTier: "FTDv30"
+          name: "{{ ftd_name | default(item.value) }}"
+          accessPolicy:
+            id: "{{ access_policy[0].id }}"
+            type: "AccessPolicy"
+          natID: "{{ nat_id | default(device_name.ftd1_nat_id) }}"
+        path_params:
+          domainUUID: "{{ domain[0].uuid }}"
+      loop: "{{ ftd_ip_name | dict2items }}"
+      vars:
+        ftd_ip_name:
+          "{{mgmt.ftd1}}": "{{device_name.ftd1}}"
+
+    - name: Task05 - Wait For FTD Registration Completion
+      ansible.builtin.wait_for:
+        timeout: 120
+      delegate_to: localhost
+
+    - name: Task06 - Confirm FTD Init Deploy Complete
+      cisco.fmcansible.fmc_configuration:
+        operation: getAllDevice
+        path_params:
+          domainUUID: "{{ domain[0].uuid }}"
+        query_params:
+          expanded: true
+        filters:
+          name: "{{ device_name.ftd1 }}"
+        register_as: device_list
+      until: device_list[0].deploymentStatus is match("DEPLOYED")
+      retries: 1000
+      delay: 3

@@ -8,18 +8,18 @@ read -p "Cisco PW: " cisco_pw
 
 # ssh-keygen -t rsa -b 4096 -C "ansible@localhost" -f ~/.ssh/id_rsa -N ""
 
-
 #Line below came from chatgpt
-api_key=$(curl -s -k -H "Content-Type: application/x-www-form-urlencoded" -X POST "https://${palo_ip}/api/?type=keygen" -d "user=admin&password=${palo_pw}" | grep -oP '(?<=<key>)[^<]+')
+API_KEY=$(curl -s -k -H "Content-Type: application/x-www-form-urlencoded" -X POST "https://$PALO_IP/api/?type=keygen" -d "user=admin&password=$PALO_PW" | grep -oP '(?<=<key>)[^<]+')
 
+echo $API_KEY
 # Output to fw.yml 
-cat >> data/inv.yml <<EOF
+cat > data/inv.yml <EOF
 palo:
   hosts:
-    ${palo_ip}:
+    $PALO_IP:
   vars:
-    ip_address: ${palo_ip}
-    api_key: ${api_key}
+    ip_address: $PALO_IP
+    api_key: $API_KEY
     fw: palo1
 
 esxi:

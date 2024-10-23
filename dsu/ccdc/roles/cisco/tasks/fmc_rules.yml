@@ -1,0 +1,13 @@
+---
+- name: fmc_rules | Accessrule
+  community.network.ftd_configuration:
+    operation: upsertAccessRule
+    data:
+      name: AllowCiscoTraffic
+      type: accessrule
+      sourceNetworks:
+        - "{{ networkobject_ciscodevnetnetwork }}"
+      ruleAction: PERMIT
+      eventLogAction: LOG_BOTH
+    path_params:
+      parentId: default
