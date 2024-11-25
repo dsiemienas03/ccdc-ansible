@@ -2,6 +2,7 @@
 - name: install_panos_version | Download PAN-OS Major version
   paloaltonetworks.panos.panos_software:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     version: "{{ major_version }}"
     install: false
     restart: false
@@ -10,6 +11,7 @@
 - name: install_panos_version | Install PAN-OS Minor version and Reboot
   paloaltonetworks.panos.panos_software:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     version: "{{ code_revisions.get(major_version) }}"
     install: true
     restart: true

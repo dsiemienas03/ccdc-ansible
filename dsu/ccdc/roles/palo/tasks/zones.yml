@@ -3,6 +3,7 @@
 - name: zones | Create WAN zone
   paloaltonetworks.panos.panos_zone:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     mode: layer2
     zone: wan
   when: palo_config_initial_zones
@@ -10,6 +11,7 @@
 - name: zones | Create LAN zone
   paloaltonetworks.panos.panos_zone:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     mode: layer2
     zone: lan
   when: palo_config_initial_zones
@@ -17,6 +19,7 @@
 - name: zones | Create MGT zone
   paloaltonetworks.panos.panos_zone:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     mode: layer2
     zone: mgt
   when: palo_config_initial_zones
@@ -31,6 +34,7 @@
 - name: zones | Config additional zones
   paloaltonetworks.panos.panos_zone:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     mode: layer2
     zone: "{{ item.value }}"
-  loop: "{{ palo.zones | dict2items }}"
+  loop: "{{ palo_zone.zones | dict2items }}"

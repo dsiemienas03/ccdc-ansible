@@ -5,18 +5,6 @@
 
 version: 2
 updates:
-  - package-ecosystem: "docker" # See documentation for possible values
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "daily"
-    labels:
-      - docker
-      - dependabot
-    reviewers:
-      - "dsiemienas03"
-    assignees:
-      - "dsiemienas03"
-
   - package-ecosystem: "pip" # See documentation for possible values
     directory: "/config/" # Location of package manifests
     schedule:
