@@ -1,0 +1,9 @@
+---
+- name: wasabi_svc | Iptables go brrrrrr {{ service.key }}
+  ansible.builtin.iptables:
+    chain: FORWARD
+    destination: "{{ item.value.ip |  default(wan_net ~ item.key) }}"
+    destination_port: "{{ item.value.port | default(wrccdc_fw.svc[service.key].port) }}"
+    protocol: "{{ wrccdc_fw.svc[service.key].protocol | default('tcp') }}"
+    jump: ACCEPT
+  loop: "{{ service.value | dict2items }}"
