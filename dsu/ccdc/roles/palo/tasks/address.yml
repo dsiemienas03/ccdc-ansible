@@ -15,6 +15,7 @@
     value: "{{ remote_mask }}"
 
 - name: address | Add ESXI address
+  when: services.palo.esx is defined
   paloaltonetworks.panos.panos_address_object:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
@@ -23,6 +24,7 @@
   loop: "{{ services.palo.esx | dict2items }}"
 
 - name: address | Add windows server address group
+  when: services.palo.win is defined
   paloaltonetworks.panos.panos_address_group:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
@@ -31,6 +33,7 @@
   loop: "{{ services.palo.dc | dict2items }}"
 
 - name: address | Add esx address group
+  when: services.palo.esx is defined
   paloaltonetworks.panos.panos_address_group:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"

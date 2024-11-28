@@ -24,12 +24,12 @@
     source_zone: ["{{ alias.lan | default('lan') }}"]
     source_ip: ["{{ local_dns }}"]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
-    destination_ip: ["{{ dns_white }}"]
+    destination_ip: ["{{ white_dns }}"]
     application: [dns]
     action: allow
     group_profile: security
     location: after
-    existing_rule: inbound-sql
+    existing_rule: inbound-db
     log_start: true
     log_end: true
     log_setting: Loggie McLog Face
@@ -111,7 +111,7 @@
     application: [any]
     action: allow
     location: after
-    existing_rule: inbound-sql
+    existing_rule: inbound-db
     log_start: true
     log_end: true
     log_setting: Loggie McLog Face
