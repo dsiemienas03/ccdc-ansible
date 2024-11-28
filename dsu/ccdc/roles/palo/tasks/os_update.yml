@@ -6,6 +6,7 @@
 - name: os_update | Download PAN-OS update
   paloaltonetworks.panos.panos_software:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     version: "{{ palo_panos_version }}"
     install: true
     restart: true

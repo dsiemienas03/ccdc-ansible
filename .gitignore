@@ -5,3 +5,4 @@ fw*.yml
 **/*.tgz
 **/*.tar.gz
 settings.json
+Dockerfile
