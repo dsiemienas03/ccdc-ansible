@@ -1,10 +1,10 @@
 ---
-- name: all_updates | Update anti-virus
-  ansible.builtin.import_tasks: av_update.yml
-  when: palo_update_other
-
 - name: all_updates | Update content
   ansible.builtin.import_tasks: content_update.yml
+  when: palo_update_other
+
+- name: all_updates | Update anti-virus
+  ansible.builtin.import_tasks: av_update.yml
   when: palo_update_other
 
 - name: all_updates | Update wildfire

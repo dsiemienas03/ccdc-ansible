@@ -80,6 +80,12 @@
     destination_zone: ["{{ alias.wan | default('wan') }}"]
     destination_ip: [any]
     application: [apt-get]
+    action: allow
+    group_profile: security
+    log_start: true
+    log_end: true
+    log_setting: Loggie McLog Face
+    tag_name: [Critical]
 
 - name: palo_critical | Allow all traffic out
   paloaltonetworks.panos.panos_security_rule:

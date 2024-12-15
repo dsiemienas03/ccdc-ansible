@@ -77,7 +77,7 @@
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
-    rule_name: outbound-patch
+    rule_name: outbound-white-patch
     source_zone: [any]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
@@ -96,7 +96,7 @@
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
-    rule_name: outbound-ntp
+    rule_name: outbound-white-ntp
     source_zone: [any]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]

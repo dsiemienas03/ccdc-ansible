@@ -6,7 +6,6 @@
 - name: os_update | Download PAN-OS update
   paloaltonetworks.panos.panos_software:
     provider: "{{ provider }}"
-    device_group: "{{ device_group if device_group is defined else omit }}"
     version: "{{ palo_panos_version }}"
     install: true
     restart: true
@@ -19,7 +18,17 @@
 
 - name: os_update | Pause for Restart Checks
   ansible.builtin.pause:
-    seconds: 10
+    seconds: 30
+
+- name: os_update | Check to see if device is ready
+  paloaltonetworks.panos.panos_op:
+    provider: '{{ provider }}'
+    cmd: 'show chassis-ready'
+  changed_when: false
+  register: result
+  until: result is not failed and (result.stdout | from_json).response.result == "yes"
+  retries: 90
+  delay: 5
 
 - name: os_update | Wait for Online Handler
   ansible.builtin.meta: flush_handlers
@@ -27,6 +36,5 @@
 - name: os_update | Set os_update as done
   ansible.builtin.set_fact:
     palo_update_os: false
-    palo_update_other: false
     cacheable: true
   when: palo_update_os
