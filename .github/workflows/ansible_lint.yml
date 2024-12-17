@@ -22,7 +22,7 @@ jobs:
       - run: ansible-galaxy collection install -r config/requirements.yml
 
       - name: Run ansible-lint
-        uses: ansible/ansible-lint@v24.10.0 # or version tag instead of 'main'
+        uses: ansible/ansible-lint@v24.12.2 # or version tag instead of 'main'
         with:
           args: ""
           setup_python: false
