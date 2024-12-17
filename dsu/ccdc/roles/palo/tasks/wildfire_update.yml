@@ -2,6 +2,7 @@
 - name: wildfire_update | Check for wildfire updated
   paloaltonetworks.panos.panos_op:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     cmd: request wildfire upgrade check
   register: check
 
@@ -9,6 +10,7 @@
   # Download the latest version
   paloaltonetworks.panos.panos_op:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     cmd: |
       <request><wildfire><upgrade><download>
       <latest></latest>
@@ -20,6 +22,7 @@
   # wait for this job to finish
   paloaltonetworks.panos.panos_op:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     cmd: show jobs id {{ (download.stdout | from_json).response.result.job }}
   register: download_job
   until: download_job is not failed and (download_job.stdout | from_json).response.result.job.status == 'FIN'
@@ -30,6 +33,7 @@
   # Content is downloaded and ready, now install it
   paloaltonetworks.panos.panos_op:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     cmd: |
       <request><wildfire><upgrade><install>
       <version>latest</version>

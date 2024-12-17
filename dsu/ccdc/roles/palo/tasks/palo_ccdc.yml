@@ -2,9 +2,10 @@
 - name: palo_ccdc | Inbound phone # Don't ask any questions it just needs to be
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: inbound-phone
     source_zone: ["{{ alias.wan | default('wan') }}"]
-    source_ip: ["{{ phone_white }}"]
+    source_ip: ["{{ white_phone }}"]
     destination_zone: ["{{ alias.lan | default('lan') }}"]
     destination_ip: [any]
     application: [any]
@@ -15,16 +16,17 @@
     log_end: true
     log_setting: Loggie McLog Face
     tag_name: [CCDC]
-  when: phone_white is defined
+  when: white_phone is defined
 
 - name: palo_ccdc | Outbound phone
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: outbound-phone
     source_zone: ["{{ alias.lan | default('lan') }}"]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
-    destination_ip: ["{{  phone_white }}"]
+    destination_ip: ["{{ white_phone }}"]
     action: allow
     location: after
     existing_rule: inbound-phone
@@ -32,19 +34,20 @@
     log_end: true
     log_setting: Loggie McLog Face
     tag_name: [CCDC]
-  when: phone_white is defined
+  when: white_phone is defined
 
 - name: palo_ccdc | Outbound CCS
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: outbound-ccs
     source_zone: [any]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
-    destination_ip: "{{ ccs_white }}"
+    destination_ip: "{{ white_ccs }}"
     application: [any]
     action: allow
-    existing_rule: "{{ 'outbound-phone' if phone_white is defined else omit }}"
+    existing_rule: "{{ 'outbound-phone' if white_phone is defined else omit }}"
     location: "{{ 'after' if outbound_phone is defined else 'top' }}"
     log_start: true
     log_end: true
@@ -54,11 +57,12 @@
 - name: palo_ccdc | Outbound proxy
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: outbound-proxy
     source_zone: [any]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
-    destination_ip: ["{{ proxy_white }}"]
+    destination_ip: ["{{ white_proxy }}"]
     service: [service-http]
     action: allow
     location: after
@@ -72,11 +76,12 @@
 - name: palo_ccdc | Outbound patch
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: outbound-white-patch
     source_zone: [any]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
-    destination_ip: ["{{ patch_white }}"]
+    destination_ip: ["{{ white_patch }}"]
     application: [any]
     action: allow
     location: after
@@ -90,11 +95,12 @@
 - name: palo_ccdc | Outbound NTP
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: outbound-white-ntp
     source_zone: [any]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
-    destination_ip: ["{{ ntp_white }}"]
+    destination_ip: ["{{ white_net }}"]
     application: [ntp]
     action: allow
     location: after
@@ -108,11 +114,12 @@
 - name: palo_ccdc | Outbound chat
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: outbound-chat
     source_zone: [any]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
-    destination_ip: ["{{ chat_white }}"]
+    destination_ip: ["{{ white_chat }}"]
     application: [any]
     action: allow
     location: after
@@ -126,11 +133,12 @@
 - name: palo_ccdc | Outbound inject
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: outbound-inject
     source_zone: [any]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
-    destination_ip: ["{{ inject_white }}"]
+    destination_ip: ["{{ white_inject }}"]
     application: [any]
     action: allow
     location: after
@@ -144,6 +152,7 @@
 - name: palo_ccdc | Inbound icmp
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: inbound-icmp
     source_zone: ["{{ alias.wan | default('wan') }}"]
     source_ip: [any]
@@ -163,6 +172,7 @@
   when: services.palo.win is defined
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: inbound-rdp
     source_zone: ["{{ alias.wan | default('wan') }}"]
     source_ip: [any]

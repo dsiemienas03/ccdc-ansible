@@ -2,6 +2,7 @@
 - name: tags | Create tag object Critical
   paloaltonetworks.panos.panos_tag_object:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     name: Critical
     color: red
     comments: Critical
@@ -9,6 +10,7 @@
 - name: tags | Create tag object BLOCK ALL
   paloaltonetworks.panos.panos_tag_object:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     name: BLOCK ALL
     color: red
     comments: Block all traffic
@@ -16,6 +18,7 @@
 - name: tags | Create tag object ALLOW ALL
   paloaltonetworks.panos.panos_tag_object:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     name: ALLOW ALL
     color: red
     comments: Allow all traffic
@@ -23,6 +26,7 @@
 - name: tags | Create tag object CCDC
   paloaltonetworks.panos.panos_tag_object:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     name: CCDC
     color: blue
     comments: CCDC tag
@@ -30,6 +34,7 @@
 - name: tags | Create tag object Service
   paloaltonetworks.panos.panos_tag_object:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     name: Service
     color: turquoise blue
     comments: Service tag
@@ -37,6 +42,7 @@
 - name: tags | Create tag object Local
   paloaltonetworks.panos.panos_tag_object:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     name: local
     color: green
     comments: Local tag
@@ -44,11 +50,13 @@
 - name: tags | Create tag esxi
   paloaltonetworks.panos.panos_tag_object:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     name: esx
 
 - name: tags | Create tag object DC
   paloaltonetworks.panos.panos_tag_object:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     name: dc
     color: purple
     comments: DC tag
@@ -56,10 +64,12 @@
 - name: tags | Create tag object Windows
   paloaltonetworks.panos.panos_tag_object:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     name: windows
 
 - name: tags | Create tag object Block
   paloaltonetworks.panos.panos_tag_object:
     provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
     name: Block
     color: red-orange
