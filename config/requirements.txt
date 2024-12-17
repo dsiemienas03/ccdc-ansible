@@ -4,7 +4,7 @@ cryptography==41.0.7
 git+https://github.com/vmware/vsphere-automation-sdk-python.git ; python_version >= '2.7' 
 lxml==5.3.0
 pan-os-python==1.12.1
-pan-python==0.17.0
+pan-python==0.25.0
 panos-upgrade-assurance==1.1.0
 pathlib==1.0.1
 pycparser==2.22
