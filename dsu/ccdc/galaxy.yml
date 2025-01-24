@@ -45,7 +45,7 @@ tags:
 # range specifiers can be set and are separated by ','
 dependencies:
   paloaltonetworks.panos: 2.21.3
-  cisco.fmcansible: 0.9.1
+  cisco.fmcansible: 1.0.2
   pfsensible.core: 0.6.1
 # The URL of the originating SCM repository
 repository: http://example.com/repository
