@@ -25,4 +25,6 @@ jobs:
         uses: ansible/ansible-lint@v24.12.2 # or version tag instead of 'main'
         with:
           args: ""
-          setup_python: false
+          setup_python: true
+          working_directory: ""
+          requirements_file: requirements.txt
