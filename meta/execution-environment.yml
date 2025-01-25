@@ -2,8 +2,4 @@
 version: 3
 dependencies:
   python: ../requirements.txt
-  galaxy:
-    collections:
-      - name: dsu.ccdc
-        type: dir
-        source: ../
+  galaxy: ../requirements.yml
