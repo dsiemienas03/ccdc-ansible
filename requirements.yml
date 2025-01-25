@@ -11,6 +11,6 @@ collections:
   - name: community.general
   # VMware
   - name: community.vmware
-  - name: dsu.ccdc
-    type: dir
-    source: ccdc/
+  # - name: dsu.ccdc
+  #   type: dir
+  #   source: ccdc/
