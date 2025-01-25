@@ -18,12 +18,12 @@ jobs:
           python-version: "3.12"
           cache: "pip"
 
-      - run: pip install -r config/requirements.txt
-      - run: ansible-galaxy collection install -r config/requirements.yml
+      - run: pip install -r requirements.txt
 
       - name: Run ansible-lint
         uses: ansible/ansible-lint@v25.1.0 # or version tag instead of 'main'
         with:
           args: ""
           setup_python: false
-          working_directory: "dsu/ccdc/"
+          working_directory: ""
+          requirements_file: requirements.yml

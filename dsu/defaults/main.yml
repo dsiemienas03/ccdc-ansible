@@ -1,9 +1,0 @@
----
-# vars file for ccdc
-# Whiteteam IPs
-mask_white: 10.120.0.0/24
-ntp_white: 10.120.0.10
-dns_white: 10.120.0.53
-phone_white: 10.120.0.100
-ccs_white: 10.120.0.111
-proxy_white: 10.120.0.200
