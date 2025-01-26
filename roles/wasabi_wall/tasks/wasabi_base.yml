@@ -31,7 +31,6 @@
     protocol: tcp
     jump: ACCEPT
 
-
 - name: wasabi_base | Allow esablished/related FORWARD
   ansible.builtin.iptables:
     chain: FORWARD

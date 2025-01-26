@@ -8,8 +8,9 @@ collections:
   # Cisco
   - name: cisco.fmcansible
   # Proxmox community.general.proxmox
+  - name: community.general
   # VMware
-  # - name: community.vmware
+  - name: community.vmware
   # - name: dsu.ccdc
   #   type: dir
   #   source: ccdc/
