@@ -100,7 +100,7 @@
     source_zone: [any]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
-    destination_ip: ["{{ white_net }}"]
+    destination_ip: ["{{ white_ntp }}"]
     application: [ntp]
     action: allow
     location: after

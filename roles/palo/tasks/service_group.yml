@@ -15,7 +15,7 @@
     device_group: "{{ device_group if device_group is defined else omit }}"
     name: service-proxy
     protocol: tcp
-    destination_port: "8080"
+    destination_port: "{{  proxy_port | default('8080') }}"
 
 # Service groups
 # Add web service group

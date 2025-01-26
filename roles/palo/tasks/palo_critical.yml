@@ -91,7 +91,7 @@
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
-    rule_name: outbound-ALLOW
+    rule_name: out-allow-all
     source_zone: ["{{ alias.lan | default('lan') }}"]
     source_ip: [any]
     destination_zone: ["{{ alias.wan | default('wan') }}"]
@@ -128,7 +128,7 @@
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
-    rule_name: inbound-all
+    rule_name: in-allow-all
     source_zone: ["{{ alias.wan | default('wan') }}"]
     source_ip: [any]
     destination_zone: ["{{ alias.lan | default('lan') }}"]
