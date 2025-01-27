@@ -3,6 +3,8 @@ galaxy_info:
   author: David
   description: your role description
   company: DSU
+  namespace: dsu
+  role_name: wasabi_wall
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
@@ -32,6 +34,7 @@ galaxy_info:
     # NOTE: A tag is limited to a single word comprised of alphanumeric characters.
     #       Maximum 20 tags per role.
 
-dependencies: []
+dependencies:
+  []
   # List your role dependencies here, one per line. Be sure to remove the '[]' above,
   # if you add dependencies to this list.

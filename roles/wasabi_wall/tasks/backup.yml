@@ -1,11 +1,5 @@
 ---
-- name: restore | Firewall restore
-  hosts: wrccdc_fw
-  # connection: local
-  gather_facts: false
-  ignore_errors: true
-  tasks:
-    - name: Save current state of the firewall
-      community.general.iptables_state:
-        state: restored
-        path: /etc/sysconfig/iptables.rules
+- name: backup | Firewall restore
+  community.general.iptables_state:
+    state: restored
+    path: /etc/sysconfig/iptables.rules
