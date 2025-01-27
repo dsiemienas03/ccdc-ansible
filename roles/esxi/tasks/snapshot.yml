@@ -29,6 +29,7 @@
     username: "{{ esxi_user }}"
     password: "{{ esxi_password }}"
     datacenter: "{{ item.datacenter }}"
+    folder: "{{ item.folder }}"
     validate_certs: false
     name: "{{ item.guest_name }}"
   loop: "{{ vm_info.virtual_machines | list }}"

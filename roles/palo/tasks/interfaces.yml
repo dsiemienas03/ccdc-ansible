@@ -5,7 +5,6 @@
   when: palo_config_initial_interface
   paloaltonetworks.panos.panos_vlan:
     provider: "{{ provider }}"
-    device_group: "{{ device_group if device_group is defined else omit }}"
     name: default
     gathered_filter: vlan_name
 
@@ -14,7 +13,6 @@
   when: palo_config_initial_interface
   paloaltonetworks.panos.panos_interface:
     provider: "{{ provider }}"
-    device_group: "{{ device_group if device_group is defined else omit }}"
     mode: layer2
     vlan_name: default
     zone_name: wan
@@ -25,7 +23,6 @@
   when: palo_config_initial_interface
   paloaltonetworks.panos.panos_interface:
     provider: "{{ provider }}"
-    device_group: "{{ device_group if device_group is defined else omit }}"
     mode: layer2
     vlan_name: default
     zone_name: lan
@@ -61,7 +58,6 @@
 - name: interfaces | Config additional interfaces
   paloaltonetworks.panos.panos_interface:
     provider: "{{ provider }}"
-    device_group: "{{ device_group if device_group is defined else omit }}"
     mode: layer2
     vlan_name: default
     zone_name: "{{ item.value.zone }}"

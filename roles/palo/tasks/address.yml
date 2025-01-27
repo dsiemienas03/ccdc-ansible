@@ -4,7 +4,7 @@
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
     name: lan
-    value: "{{ fw_mask }}"
+    value: "{{ lan_net }}"
 
 - name: address | Add Remote address
   when: remote_mask is defined
