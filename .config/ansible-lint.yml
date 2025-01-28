@@ -10,17 +10,22 @@ profile: production # min, basic, moderate,safety, shared, production
 # and not relative to the CWD of execution. CLI arguments passed to the --exclude
 # option are parsed relative to the CWD of execution.
 exclude_paths:
-  - .github/
+  - .github/**
+  - .ansible/**
   - submodules/
   - test-playbooks/
-  - /**/cisco
-  - /**/pfsense
+  - changelogs/**
+  - /**/cisco/**
+  - /**/pfsense/**
   - /**beta.yml
   - /**/*beta.yml/**
   - /**/palo-beta.yml
-  - /**/tests
+  - /**/tests/**
   - .gitlab-ci.yml
   - .gitmodules
+  - .gitignore
+  - requirements.yml
+  - requirements.txt
 # parseable: true
 # quiet: true
 # strict: true

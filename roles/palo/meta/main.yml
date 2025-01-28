@@ -3,6 +3,8 @@ galaxy_info:
   author: David
   description: Cyber Nerd
   company: DSU
+  namespace: dsu
+  role_name: palo
 
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
