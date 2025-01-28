@@ -25,5 +25,5 @@ jobs:
         with:
           args: ""
           setup_python: false
-          working_directory: ""
+          working_directory: "ccdc-ansible"
           requirements_file: requirements.yml
