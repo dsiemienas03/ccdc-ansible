@@ -32,7 +32,7 @@
 
 # Custom zones for certian applications
 - name: zones | Config additional zones
-  when: plao.zones is defined
+  when: palo_zones is defined
   paloaltonetworks.panos.panos_zone:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
