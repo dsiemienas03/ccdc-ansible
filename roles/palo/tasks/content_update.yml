@@ -32,7 +32,8 @@
       {{ parsed_data.response.result['content-updates'].entry
       | selectattr('current', 'equalto', 'yes')
       | map(attribute='version')
-      | first }}
+      | first
+      | default() }}
     latest_update: >-
       {{ parsed_data.response.result['content-updates'].entry
       | sort(attribute='released-on', reverse=True)
