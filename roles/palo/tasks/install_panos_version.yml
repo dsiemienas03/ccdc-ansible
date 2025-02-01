@@ -11,8 +11,8 @@
   paloaltonetworks.panos.panos_software:
     provider: "{{ provider }}"
     version: "{{ palo_code_revisions.get(major_version) }}"
-    install: false
-    restart: false
+    install: true
+    restart: true
   register: install_result
 
 - name: install_panos_version | Notify Reboot Handler
