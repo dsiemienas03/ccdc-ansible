@@ -52,22 +52,22 @@
 - name: wildfire_update | Download and Install
   when: (latest_update != current_update) or parsed_data.response.result['content-updates'].entry.installed is not defined
   block:
-    # - name: wildfire_update | Download latest content
-    #   # Download the latest version
-    #   paloaltonetworks.panos.panos_op:
-    #     provider: "{{ provider }}"
-    #     cmd: request wildfire upgrade download
-    #   register: download
+    - name: wildfire_update | Download latest content
+      # Download the latest version
+      paloaltonetworks.panos.panos_op:
+        provider: "{{ provider }}"
+        cmd: request wildfire upgrade download latest
+      register: download
 
-    # - name: wildfire_update | Check content download result
-    #   # wait for this job to finish
-    #   paloaltonetworks.panos.panos_op:
-    #     provider: "{{ provider }}"
-    #     cmd: show jobs id {{ (download.stdout | from_json).response.result.job }}
-    #   register: download_job
-    #   until: download_job is not failed and (download_job.stdout | from_json).response.result.job.status == 'FIN'
-    #   retries: 150
-    #   delay: 2
+    - name: wildfire_update | Check content download result
+      # wait for this job to finish
+      paloaltonetworks.panos.panos_op:
+        provider: "{{ provider }}"
+        cmd: show jobs id {{ (download.stdout | from_json).response.result.job }}
+      register: download_job
+      until: download_job is not failed and (download_job.stdout | from_json).response.result.job.status == 'FIN'
+      retries: 150
+      delay: 2
 
     - name: wildfire_update | Install latest content
       # Content is downloaded and ready, now install it
@@ -75,3 +75,13 @@
         provider: "{{ provider }}"
         cmd: request wildfire upgrade install version latest
       register: install
+
+    - name: wildfire_update | Check content install result
+      # again, wait for job to complete
+      paloaltonetworks.panos.panos_op:
+        provider: "{{ provider }}"
+        cmd: show jobs id {{ (install.stdout | from_json).response.result.job }}
+      register: install_job
+      until: install_job is not failed and (install_job.stdout | from_json).response.result.job.status == 'FIN'
+      retries: 150
+      delay: 2

@@ -4,7 +4,7 @@
   paloaltonetworks.panos.panos_pg:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
-    pg_name: secure
+    pg_name: security
     virus: default
     file_blocking: strict file blocking
     spyware: default

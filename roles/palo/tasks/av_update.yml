@@ -67,7 +67,8 @@
 
     - name: av_update | Content update result
       ansible.builtin.debug:
-        msg: "{{ download.stdout }}"
+        msg: 
+          - JobID: "{{ (download.stdout | from_json).response.result.job }}"
 
     - name: av_update | Check anti-virus download result
       # wait for this job to finish
