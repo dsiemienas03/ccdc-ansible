@@ -75,4 +75,3 @@
         provider: "{{ provider }}"
         cmd: request wildfire upgrade install version latest
       register: install
-
