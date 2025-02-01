@@ -24,7 +24,10 @@
 
 - name: av_update | Extract relevant details from parsed data
   ansible.builtin.set_fact:
-    av_updates: "{{ parsed_data.response.result['content-updates'].entry | map(attribute='version') | list }}"
+    av_updates: >-
+      {{ parsed_data.response.result['content-updates'].entry
+      | map(attribute='version')
+      | list }}
     downloaded_updates: >-
       {{ parsed_data.response.result['content-updates'].entry
       | selectattr('downloaded', 'equalto', 'yes')
@@ -34,10 +37,13 @@
       {{ parsed_data.response.result['content-updates'].entry
       | selectattr('current', 'equalto', 'yes')
       | map(attribute='version')
-      | first }}
-    latest_update: "{{ parsed_data.response.result['content-updates'].entry
+      | first
+      | default() }}
+    latest_update: >-
+      {{ parsed_data.response.result['content-updates'].entry
       | sort(attribute='released-on', reverse=True)
-      | first }}"
+      | map(attribute='version')
+      | first }}
 
 - name: av_update | Show extracted data
   ansible.builtin.debug:
