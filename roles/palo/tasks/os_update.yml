@@ -42,7 +42,7 @@
 
 - name: os_update | Setup Code Revisions Major List
   ansible.builtin.set_fact:
-    major_versions: "{{ code_revisions.keys() | list }}"
+    major_versions: "{{ palo_code_revisions.keys() | list }}"
 
 - name: os_update | Set Desired Major Release
   ansible.builtin.set_fact:
@@ -50,11 +50,11 @@
     current_major: "{{ major_versions | select('version', sw_version, '<=') | list | last }}"
 
 - name: os_update | Set Desired Minor Version
-  # code_revisions contains a dict of major versions with the latest minor versions
+  # palo_code_revisions contains a dict of major versions with the latest minor versions
   # in most cases, we want to install the latest minor release. However, the user
   # may specify any minor release they want, so capture that here
   ansible.builtin.set_fact:
-    code_revisions: "{{ code_revisions | combine({desired_major: desired_version}) }}"
+    palo_code_revisions: "{{ palo_code_revisions | combine({desired_major: desired_version}) }}"
 
 - name: os_update | Setup Possible Upgrade Paths
   ansible.builtin.set_fact:

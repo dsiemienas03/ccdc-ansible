@@ -7,10 +7,10 @@
     restart: false
   when: current_major != major_version
 
-- name: install_panos_version | Install PAN-OS Minor version and Reboot {{ code_revisions.get(major_version) }}
+- name: install_panos_version | Install PAN-OS Minor version and Reboot {{ palo_code_revisions.get(major_version) }}
   paloaltonetworks.panos.panos_software:
     provider: "{{ provider }}"
-    version: "{{ code_revisions.get(major_version) }}"
+    version: "{{ palo_code_revisions.get(major_version) }}"
     install: false
     restart: false
   register: install_result
