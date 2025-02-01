@@ -67,14 +67,13 @@
 
     - name: av_update | Content update result
       ansible.builtin.debug:
-        msg: 
+        msg:
           - JobID: "{{ (download.stdout | from_json).response.result.job }}"
 
     - name: av_update | Check anti-virus download result
       # wait for this job to finish
       paloaltonetworks.panos.panos_op:
         provider: "{{ provider }}"
-        device_group: "{{ device_group if device_group is defined else omit }}"
         cmd: show jobs id {{ (download.stdout | from_json).response.result.job }}
       register: download_job
       until: download_job is not failed and (download_job.stdout | from_json).response.result.job.status == 'FIN'
@@ -85,7 +84,6 @@
       # Content is downloaded and ready, now install it
       paloaltonetworks.panos.panos_op:
         provider: "{{ provider }}"
-        device_group: "{{ device_group if device_group is defined else omit }}"
         cmd: request anti-virus upgrade install version latest
       register: av_install
 
