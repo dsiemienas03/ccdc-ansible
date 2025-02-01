@@ -6,37 +6,74 @@
     cmd: request wildfire upgrade check
   register: check
 
-- name: wildfire_update | Download latest content
-  # Download the latest version
+- name: wildfire_update | Get wildfire info
+  # Get the current wildfire version
   paloaltonetworks.panos.panos_op:
     provider: "{{ provider }}"
-    device_group: "{{ device_group if device_group is defined else omit }}"
-    cmd: |
-      <request><wildfire><upgrade><download>
-      <latest></latest>
-      </download></upgrade></wildfire></request>
-    cmd_is_xml: true
-  register: download
+    cmd: request wildfire upgrade info
+  register: info
 
-- name: wildfire_update | Check content download result
-  # wait for this job to finish
-  paloaltonetworks.panos.panos_op:
-    provider: "{{ provider }}"
-    device_group: "{{ device_group if device_group is defined else omit }}"
-    cmd: show jobs id {{ (download.stdout | from_json).response.result.job }}
-  register: download_job
-  until: download_job is not failed and (download_job.stdout | from_json).response.result.job.status == 'FIN'
-  retries: 75
-  delay: 5
+- name: wildfire_update | Set fact for parsed JSON data
+  ansible.builtin.set_fact:
+    parsed_data: "{{ info.stdout | from_json }}"
 
-- name: wildfire_update | Install latest content
-  # Content is downloaded and ready, now install it
-  paloaltonetworks.panos.panos_op:
-    provider: "{{ provider }}"
-    device_group: "{{ device_group if device_group is defined else omit }}"
-    cmd: |
-      <request><wildfire><upgrade><install>
-      <version>latest</version>
-      </install></upgrade></wildfire></request>
-    cmd_is_xml: true
-  register: install
+- name: wildfire_update | Extract relevant details from parsed data
+  ansible.builtin.set_fact:
+    wildfire_updates: "{{ parsed_data.response.result['content-updates'].entry | map(attribute='version') | list }}"
+    downloaded_updates: >-
+      {{ parsed_data.response.result['content-updates'].entry
+      | selectattr('downloaded', 'equalto', 'yes')
+      | map(attribute='version')
+      | list }}
+    current_update: >-
+      {{ parsed_data.response.result['content-updates'].entry
+      | selectattr('current', 'equalto', 'yes')
+      | map(attribute='version')
+      | first }}
+    latest_update: "{{ parsed_data.response.result['content-updates'].entry
+      | sort(attribute='released-on', reverse=True)
+      | first }}"
+
+- name: wildfire_update | Show extracted data
+  ansible.builtin.debug:
+    msg:
+      - "All Versions: {{ wildfire_updates }}"
+      - "Downloaded Versions: {{ downloaded_updates }}"
+      - "Current Version: {{ current_update }}"
+      - "Latest Version: {{ latest_update }}"
+      - "Need to download: {{ (latest_update != current_update) }}"
+
+- name: wildfire_update | Download and Install
+  when: (latest_update != current_update)
+  block:
+    - name: wildfire_update | Download latest content
+      # Download the latest version
+      paloaltonetworks.panos.panos_op:
+        provider: "{{ provider }}"
+        device_group: "{{ device_group if device_group is defined else omit }}"
+        cmd: request wildfire upgrade download latest
+      register: download
+
+    - name: wildfire_update | Check content download result
+      # wait for this job to finish
+      paloaltonetworks.panos.panos_op:
+        provider: "{{ provider }}"
+        device_group: "{{ device_group if device_group is defined else omit }}"
+        cmd: show jobs id {{ (download.stdout | from_json).response.result.job }}
+      register: download_job
+      until: download_job is not failed and (download_job.stdout | from_json).response.result.job.status == 'FIN'
+      retries: 150
+      delay: 2
+
+    - name: wildfire_update | Install latest content
+      # Content is downloaded and ready, now install it
+      paloaltonetworks.panos.panos_op:
+        provider: "{{ provider }}"
+        device_group: "{{ device_group if device_group is defined else omit }}"
+        cmd: request wildfire upgrade install version latest
+        cmd_is_xml: true
+      register: install
+
+    - name: wildfire_update | Register wildfire update
+      ansible.builtin.set_fact:
+        wildfire_update: true
