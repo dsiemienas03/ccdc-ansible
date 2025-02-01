@@ -100,6 +100,3 @@
     - name: content_update | Content update result
       ansible.builtin.debug:
         msg: "{{ install_job.stdout }}"
-    - name: content_update | Register content update
-      ansible.builtin.set_fact:
-        content_update: true

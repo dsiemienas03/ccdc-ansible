@@ -106,6 +106,3 @@
     - name: av_update | AV update result
       ansible.builtin.debug:
         msg: "{{ av_install_job.stdout }}"
-    - name: av_update | Register AV update
-      ansible.builtin.set_fact:
-        av_update: true
