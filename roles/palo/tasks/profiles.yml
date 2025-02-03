@@ -11,3 +11,9 @@
     vulnerability: default
     url_filtering: default
     wildfire: default
+
+- name: profiles | Setup security profile group
+  paloaltonetworks.panos.panos_pg:
+    provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
+    pg_name: alert
