@@ -28,5 +28,5 @@
 
     - name: Add service rules
       ansible.builtin.include_role:
-        role: dsu.ccdc.palo
+        name: dsu.ccdc.palo
         tasks_from: palo_resvc
