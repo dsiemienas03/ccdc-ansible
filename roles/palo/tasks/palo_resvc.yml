@@ -1,5 +1,4 @@
----
-- name: palo_local | Block WAN to ESXI
+- name: palo_resvc | Block WAN to ESXI
   when: services.palo.esx is defined
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
@@ -7,7 +6,7 @@
     rule_name: inbound-esx{{ item.key }}
     source_zone: ["{{ alias.wan | default('wan') }}"]
     source_ip: [any]
-    destination_zone: ["{{ item.value.zone if item.value.zone is not none else alias.lan | default('lan') }}"]
+    destination_zone: ["{{ lookup('template', 'dst_zone.j2') }}"]
     destination_ip: ["{{ item.value.ip |  default(lan_net ~ item.key) }}"]
     application: [any]
     action: deny
@@ -20,14 +19,14 @@
     tag_name: [Block]
   loop: "{{ services.palo.esx | dict2items }}"
 
-- name: palo_local | Block WAN to DC
+- name: palo_resvc | Block WAN to DC
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: inbound-dc{{ item.key }}
     source_zone: ["{{ alias.wan | default('wan') }}"]
     source_ip: [any]
-    destination_zone: ["{{ item.value if item.value is not none else alias.lan | default('lan') }}"]
+    destination_zone: ["{{ lookup('template', 'dst_zone.j2') }}"]
     destination_ip: ["{{ item.value.ip |  default(lan_net ~ item.key) }}"]
     application: [windc]
     action: deny
@@ -40,14 +39,14 @@
     tag_name: [Block]
   loop: "{{ services.palo.dc | dict2items }}"
 
-- name: palo_local | LAN to DC
+- name: palo_resvc | LAN to DC
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: lan-windc{{ item.key }}
     source_zone: ["{{ alias.lan | default('lan') }}"]
     source_ip: [any]
-    destination_zone: ["{{ item.value if item.value is not none else alias.lan | default('lan') }}"]
+    destination_zone: ["{{ lookup('template', 'dst_zone.j2') }}"]
     destination_ip: ["{{ item.value.ip |  default(lan_net ~ item.key) }}"]
     application: [windc]
     action: allow
@@ -60,16 +59,16 @@
     tag_name: [Service, local]
   loop: "{{ services.palo.dc | dict2items }}"
 
-- name: palo_local | LAN to ESXI
+- name: palo_resvc | LAN to ESXI
   when: services.palo.esx is defined
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: lan-esx{{ item.key }}
-    source_zone: ["{{ alias.lan | default('lan1') }}"]
+    source_zone: ["{{ alias.lan | default('lan') }}"]
     source_ip: [any]
-    destination_zone: ["{{ item.value if item.value is not none else alias.lan | default('lan') }}"]
-    destination_ip: ["{{ item.value.ip |  default(lan_net ~ item.key) }}"]
+    destination_zone: ["{{ lookup('template', 'dst_zone.j2') }}"]
+    destination_ip: ["{{ item.value.ip | default(lan_net ~ item.key) }}"]
     application: [vmware, ssl]
     action: allow
     location: before
@@ -81,7 +80,7 @@
     tag_name: [Service, local]
   loop: "{{ services.palo.esx | dict2items }}"
 
-- name: palo_local | LAN to remote network
+- name: palo_resvc | LAN to remote network
   when: remote_net is defined
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
@@ -101,7 +100,7 @@
     log_setting: Loggie McLog Face
     tag_name: [Service, local]
 
-- name: palo_local | Remote logging network to lan
+- name: palo_resvc | Remote logging network to lan
   when: wazuh is defined and remote_net is defined
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
@@ -109,7 +108,7 @@
     rule_name: inbound-remote
     source_zone: ["{{ alias.wan | default('wan') }}"]
     source_ip: "{{ remote_net | list }}"
-    destination_zone: ["{{ wazuh_zone | default('lan') }}"]
+    destination_zone: ["{{ lookup('template', 'dst_zone.j2') }}"]
     destination_ip: ["{{ wazuh }}"]
     application: [wazuh-agent, syslog]
     action: allow
@@ -120,3 +119,10 @@
     log_end: true
     log_setting: Loggie McLog Face
     tag_name: [Service, local]
+
+- name: palo_resvc | Add service rules
+  when: service.key not in fw_block
+  ansible.builtin.include_tasks: palo_reservice.yml
+  loop: "{{ services.palo | dict2items }}"
+  loop_control:
+    loop_var: service

@@ -19,7 +19,7 @@
     validate_certs: false
     name: "{{ item.guest_name }}"
     state: present
-    snapshot_name: "{{ lookup('pipe', 'date +%H:%M:%S---%Y-%m-%d') }}"
+    snapshot_name: "{{ snap_name | default(lookup('pipe', 'date +%H:%M:%S---%Y-%m-%d')) }}"
   loop: "{{ vm_info.virtual_machines | list }}"
 
 - name: snapshot | Get snapshot info
