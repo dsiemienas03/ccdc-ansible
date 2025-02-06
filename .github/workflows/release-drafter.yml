@@ -47,6 +47,8 @@ jobs:
         #   config-name: my-config.yml
         # disable-autolabeler: false
         # current-version: ${{ steps.get_version.outputs.version }}
-          tag_name
+          version: ${{ env.version }}
+          name: ${{ env.version }}
+          tag: ${{ env.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
