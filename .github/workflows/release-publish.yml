@@ -22,22 +22,12 @@ jobs:
   get_release_version:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4.2.2
         with:
           fetch-depth: 2
-      - uses: salsify/action-detect-and-tag-new-version@v2
-        with:
-          version-command: |
-            cat VERSION
-  update_release_draft:
-    permissions:
-      # write permission is required to create a github release
-      contents: write
-      # write permission is required for autolabeler
-      # otherwise, read permission is required at least
-      pull-requests: write
-    runs-on: ubuntu-latest
-    steps:
+      - name: Get version
+        id: get_version
+        run: echo "version=$(cat VERSION)" >> $GITHUB_ENV
       # (Optional) GitHub Enterprise requires GHE_HOST variable set
       # - name: Set GHE_HOST
       #  run: |

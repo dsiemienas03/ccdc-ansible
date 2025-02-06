@@ -1,5 +1,5 @@
-name-template: '$NEXT_PATCH_VERSION'
-tag-template: '$NEXT_PATCH_VERSION'
+name-template: ${{ VERSION }}
+tag-template: ${{ VERSION }}
 categories:
   - title: '🚀 Features'
     labels:
@@ -24,6 +24,7 @@ categories:
 change-template: '- $TITLE @$AUTHOR (#$NUMBER)'
 change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 prerelease-identifier: 'alpha' # will create a prerelease with version number x.x.x-alpha.x
+include-pre-releases: true
 version-resolver:
   major:
     labels:
