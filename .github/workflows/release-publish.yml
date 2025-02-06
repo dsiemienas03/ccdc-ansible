@@ -41,5 +41,7 @@ jobs:
           disable-autolabeler: false
           publish: true
           version: ${{ env.version }}
+          tag: ${{ env.version }}
+          name: ${{ env.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
