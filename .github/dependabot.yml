@@ -11,7 +11,7 @@ updates:
     schedule:
       interval: "daily"
     labels:
-      - pip
+      - python
       - dependabot
     reviewers:
       - "dsiemienas03"
