@@ -40,7 +40,6 @@ jobs:
           #   config-name: my-config.yml
           disable-autolabeler: false
           publish: true
-          name: ${{ env.version }}
-          tag: ${{ env.version }}
+          version: ${{ env.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
