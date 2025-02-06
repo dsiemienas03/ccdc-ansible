@@ -2,10 +2,7 @@ name: Release Drafter
 
 on:
   push:
-    paths:
-      - 'VERSION'
-    branches:
-      - main
+    tags: "*.*.*"
   # branches to consider in the event; optional, defaults to all
   # pull_request event is required only for autolabeler
   # pull_request:
@@ -28,17 +25,8 @@ jobs:
       - name: Get version
         id: get_version
         run: echo "version=$(cat VERSION)" >> $GITHUB_ENV
-      # (Optional) GitHub Enterprise requires GHE_HOST variable set
-      # - name: Set GHE_HOST
-      #  run: |
-      #    echo "GHE_HOST=${GITHUB_SERVER_URL##https:\/\/}" >> $GITHUB_ENV
 
-      # Drafts your next Release notes as Pull Requests are merged into "master"
-      - uses: release-drafter/release-drafter@v6
-        # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
+      - name: Create release
+        uses: ncipollo/release-action@v1.15.0
         with:
-          #   config-name: my-config.yml
-          disable-autolabeler: false
-          publish: true
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          generateReleaseNotes: true
