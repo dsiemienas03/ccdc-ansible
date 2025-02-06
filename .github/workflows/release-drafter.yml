@@ -32,6 +32,7 @@ jobs:
       - name: get_version
         uses: salsify/action-detect-and-tag-new-version@v2
         with:
+          tag-template: '{version}'
           version-command: |
             cat VERSION
       # (Optional) GitHub Enterprise requires GHE_HOST variable set
