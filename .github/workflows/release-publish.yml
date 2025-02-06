@@ -4,6 +4,8 @@ on:
   push:
     paths:
       - 'VERSION'
+    branches:
+      - main
   # branches to consider in the event; optional, defaults to all
   # pull_request event is required only for autolabeler
   # pull_request:
