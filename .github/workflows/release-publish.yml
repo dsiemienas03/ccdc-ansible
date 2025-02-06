@@ -28,6 +28,9 @@ jobs:
       - name: Get version
         id: get_version
         run: echo "version=$(cat VERSION)" >> $GITHUB_ENV
+      - name: Sanity check
+        run: |
+          echo "Version: ${{ steps.get_version.outputs.version }}"
       # (Optional) GitHub Enterprise requires GHE_HOST variable set
       # - name: Set GHE_HOST
       #  run: |
