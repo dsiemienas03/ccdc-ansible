@@ -17,18 +17,6 @@ updates:
     assignees:
       - "dsiemienas03"
 
-  - package-ecosystem: "gitsubmodule"
-    directory: "/" # Location of package manifests
-    schedule:
-      interval: "daily"
-    labels:
-      - gitsubmodule
-      - dependabot
-    reviewers:
-      - "dsiemienas03"
-    assignees:
-      - "dsiemienas03"
-
   - package-ecosystem: "github-actions"
     directory: "/" # Location of package manifests
     schedule:
