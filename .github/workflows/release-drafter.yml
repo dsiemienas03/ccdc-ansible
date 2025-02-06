@@ -26,6 +26,14 @@ jobs:
       pull-requests: write
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
+      - name: get_version
+        uses: salsify/action-detect-and-tag-new-version@v2
+        with:
+          version-command: |
+            cat VERSION
       # (Optional) GitHub Enterprise requires GHE_HOST variable set
       # - name: Set GHE_HOST
       #  run: |
@@ -34,8 +42,9 @@ jobs:
       # Drafts your next Release notes as Pull Requests are merged into "master"
       - uses: release-drafter/release-drafter@v6
         # (Optional) specify config name to use, relative to .github/. Default: release-drafter.yml
-        with:
+        # with:
           #   config-name: my-config.yml
-          disable-autolabeler: false
+          # disable-autolabeler: false
+          # current-version: ${{ steps.get_version.outputs.version }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
