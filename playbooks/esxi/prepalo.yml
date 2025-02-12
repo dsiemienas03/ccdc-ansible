@@ -1,5 +1,5 @@
 ---
-- name: ESXI snapshot
+- name: Prep for palo
   hosts: esxi
   # ignore_errors: true
   gather_facts: false
@@ -7,13 +7,18 @@
     - dsu.ccdc.esxi
   vars:
     esxi_user: root
-  # strategy: free
+    # strategy: free
 
   tasks:
     - name: Import vars
       ansible.builtin.include_vars:
         dir: /home/ansible/vars/
-
+    - name: Debug
+      ansible.builtin.debug:
+        msg: "{{ new_net }}"
+      loop: "{{ esxi_vswitches }}"
+      loop_control:
+        loop_var: new_net
     - name: Create vSwitch
       when: esxi_vswitches is defined
       ansible.builtin.include_role:
@@ -34,13 +39,13 @@
         networks:
           - name: "{{ default_net | default('VM Network') }}"
           - name: "{{ default_net | default('VM Network') }}"
-          - name: "net1"
-          - name: "net2"
-          - name: "net3"
-          - name: "net4"
-          - name: "net5"
-          - name: "net6"
-          - name: "net7"
+          - name: "lan3"
+          - name: "lan4"
+          - name: "lan4"
+          - name: "lan5"
+          - name: "lan6"
+          - name: "lan7"
+          - name: "lan8"
           - name: "mgt"
       register: new_nic
       delegate_to: localhost

@@ -10,10 +10,10 @@
   # strategy: free
     new_net: "net1"
   tasks:
-    # - name: Create vSwitch
-    #   ansible.builtin.import_role:
-    #     name: dsu.ccdc.esxi
-    #     tasks_from: vswitch
+    - name: Create vSwitch
+      ansible.builtin.import_role:
+        name: dsu.ccdc.esxi
+        tasks_from: vswitch
 
     - name: Wait for confirmation
       ansible.builtin.pause:
