@@ -8,7 +8,7 @@
   vars:
     esxi_user: root
   # strategy: free
-    new_net: "VM Network"
+    new_net: "net1"
   tasks:
     # - name: Create vSwitch
     #   ansible.builtin.import_role:
