@@ -66,7 +66,7 @@
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: lan-esx{{ item.key }}
-    source_zone: ["{{ alias.lan | default('lan1') }}"]
+    source_zone: ["{{ alias.lan | default('lan') }}"]
     source_ip: [any]
     destination_zone: ["{{ item.value.zone if item.value.zone is defined else alias.lan | default('lan') }}"]
     destination_ip: ["{{ item.value.ip | default(lan_net ~ item.key) }}"]

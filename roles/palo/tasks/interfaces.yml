@@ -49,12 +49,6 @@
     if_name: ethernet1/7
     gathered_filter: if_name
 
-- name: interfaces | Ansible.builtin.set_fact
-  when: palo_config_initial_interface
-  ansible.builtin.set_fact:
-    palo_config_initial_interface: false
-    cacheable: true
-
 - name: interfaces | Config additional interfaces
   paloaltonetworks.panos.panos_interface:
     provider: "{{ provider }}"
@@ -64,3 +58,9 @@
     if_name: "{{ item.key }}"
     gathered_filter: if_name
   loop: "{{ palo_zone.zones | dict2items }}"
+
+- name: interfaces | Ansible.builtin.set_fact
+  when: palo_config_initial_interface
+  ansible.builtin.set_fact:
+    palo_config_initial_interface: false
+    cacheable: true
