@@ -204,5 +204,6 @@
     group_profile: security
     log_start: true
     log_end: true
+    disabled: true
     log_setting: Loggie McLog Face
     tag_name: [CCDC]
