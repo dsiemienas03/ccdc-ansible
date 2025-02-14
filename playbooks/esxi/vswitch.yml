@@ -8,12 +8,12 @@
   vars:
     esxi_user: root
   # strategy: free
-    new_net: "VM Network"
+    new_net: "lan"
   tasks:
-    # - name: Create vSwitch
-    #   ansible.builtin.import_role:
-    #     name: dsu.ccdc.esxi
-    #     tasks_from: vswitch
+    - name: Create vSwitch
+      ansible.builtin.import_role:
+        name: dsu.ccdc.esxi
+        tasks_from: vswitch
 
     - name: Wait for confirmation
       ansible.builtin.pause:
@@ -23,6 +23,7 @@
       ansible.builtin.import_role:
         name: dsu.ccdc.esxi
         tasks_from: update_nic
+
     - name: Palo NIC
       block:
         - name: Move Palo Alto NICs to new vSwitch
@@ -36,13 +37,13 @@
             networks:
               - name: "{{ default_net | default('VM Network') }}"
               - name: "{{ default_net | default('VM Network') }}"
-              - name: "net1"
-              - name: "net2"
-              - name: "net3"
-              - name: "net4"
-              - name: "net5"
-              - name: "net6"
-              - name: "net7"
+              - name: "lan"
+              - name: "lan3"
+              - name: "lan4"
+              - name: "lan5"
+              - name: "lan6"
+              - name: "lan7"
+              - name: "lan8"
               - name: "mgt"
           register: new_nic
           delegate_to: localhost

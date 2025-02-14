@@ -50,11 +50,12 @@
     gathered_filter: if_name
 
 - name: interfaces | Config additional interfaces
+  when: item.key != "ethernet1/1" and item.key != "ethernet1/2"
   paloaltonetworks.panos.panos_interface:
     provider: "{{ provider }}"
     mode: layer2
     vlan_name: default
-    zone_name: "{{ item.value.zone }}"
+    zone_name: "{{ override_nic | default(item.value.zone) }}"
     if_name: "{{ item.key }}"
     gathered_filter: if_name
   loop: "{{ palo_zone.zones | dict2items }}"
