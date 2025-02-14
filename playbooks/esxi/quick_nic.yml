@@ -32,10 +32,11 @@
         username: "{{ esxi_user }}"
         password: "{{ esxi_password }}"
         validate_certs: false
-        name: "{{ item.guest_name }}"
+        name: "{{ item.value.guest_name }}"
         # name: test
         networks:
-          - name: "{{ new_net | default('lan') }}"
+          - name: "{{ item.value.network | default('lan') }}"
       register: new_nic
       delegate_to: localhost
-      loop: "{{ esxi_vms | list }}"
+
+      loop: "{{ esxi_vms | dict2items }}"

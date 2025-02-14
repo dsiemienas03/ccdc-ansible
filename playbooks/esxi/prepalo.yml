@@ -13,12 +13,7 @@
     - name: Import vars
       ansible.builtin.include_vars:
         dir: /home/ansible/vars/
-    - name: Debug
-      ansible.builtin.debug:
-        msg: "{{ new_net }}"
-      loop: "{{ esxi_vswitches }}"
-      loop_control:
-        loop_var: new_net
+
     - name: Create vSwitch
       when: esxi_vswitches is defined
       ansible.builtin.include_role:
@@ -39,8 +34,8 @@
         networks:
           - name: "{{ default_net | default('VM Network') }}"
           - name: "{{ default_net | default('VM Network') }}"
+          - name: "lan"
           - name: "lan3"
-          - name: "lan4"
           - name: "lan4"
           - name: "lan5"
           - name: "lan6"

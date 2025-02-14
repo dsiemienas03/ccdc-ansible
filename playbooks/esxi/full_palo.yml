@@ -9,8 +9,8 @@
   # esxi_user: root
   # strategy: free
   connection: local
-  vars:
-    new_net: lan
+  # vars:
+    # new_net: lan
 
   tasks:
     - name: Import vars
