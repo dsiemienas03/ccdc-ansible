@@ -23,8 +23,7 @@ Designed for CCDC by DSU
 Playbook | Description
 --- | ---
 `dsu.ccdc.esxi.full_palo` | Flip all NICs 
-`dsu.ccdc.esxi.initial_palo` |
-`dsu.ccdc.esxi.prepalo` | 
+`dsu.ccdc.esxi.prepalo` | Adds all the NICs and gets the VMs
 `dsu.ccdc.esxi.update_nics` | Flip all NICs to specified network or defaults to `lan`
 `dsu.ccdc.esxi.snapshot` | Takes snapshots of all VMs on the host
 `dsu.ccdc.esxi.vswitch` | Create vSwitch and updates Palo NICs
