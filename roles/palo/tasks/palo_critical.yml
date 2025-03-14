@@ -103,7 +103,8 @@
     log_start: true
     log_end: true
     disabled: true
-    location: bottom
+    location: before
+    existing_rule: outbound-proxy
     log_setting: Loggie McLog Face
     tag_name: [Critical, ALLOW ALL]
 

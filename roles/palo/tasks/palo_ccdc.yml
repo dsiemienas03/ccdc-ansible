@@ -54,25 +54,6 @@
     log_setting: Loggie McLog Face
     tag_name: [CCDC]
 
-- name: palo_ccdc | Outbound proxy
-  paloaltonetworks.panos.panos_security_rule:
-    provider: "{{ provider }}"
-    device_group: "{{ device_group if device_group is defined else omit }}"
-    rule_name: outbound-proxy
-    source_zone: [any]
-    source_ip: [any]
-    destination_zone: ["{{ alias.wan | default('wan') }}"]
-    destination_ip: ["{{ white_proxy }}"]
-    service: [service-proxy]
-    action: allow
-    location: after
-    existing_rule: outbound-ccs
-    group_profile: security
-    log_start: true
-    log_end: true
-    log_setting: Loggie McLog Face
-    tag_name: [CCDC]
-
 - name: palo_ccdc | Outbound patch
   paloaltonetworks.panos.panos_security_rule:
     provider: "{{ provider }}"
@@ -85,7 +66,7 @@
     application: [any]
     action: allow
     location: after
-    existing_rule: outbound-proxy
+    existing_rule: outbound-phone
     group_profile: security
     log_start: true
     log_end: true
@@ -205,5 +186,23 @@
     log_start: true
     log_end: true
     disabled: true
+    log_setting: Loggie McLog Face
+    tag_name: [CCDC]
+
+- name: palo_ccdc | Outbound proxy
+  paloaltonetworks.panos.panos_security_rule:
+    provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
+    rule_name: outbound-proxy
+    source_zone: [any]
+    source_ip: [any]
+    destination_zone: ["{{ alias.wan | default('wan') }}"]
+    destination_ip: ["{{ white_proxy }}"]
+    service: [service-proxy]
+    action: allow
+    location: bottom
+    group_profile: security
+    log_start: true
+    log_end: true
     log_setting: Loggie McLog Face
     tag_name: [CCDC]
