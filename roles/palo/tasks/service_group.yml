@@ -32,4 +32,4 @@
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
     name: windc
-    value: [active-directory-base, ldap, ms-ds-smb, kerberos]
+    value: [active-directory, ldap, ms-ds-smb, kerberos]
