@@ -29,7 +29,7 @@
     if_name: ethernet1/2
     gathered_filter: if_name
 
-- name: interfaces | Add ethernet1/6 to zone mgt
+- name: interfaces | Add ethernet1/9 to zone mgt
   when: palo_config_initial_interface and palo_physical
   paloaltonetworks.panos.panos_interface:
     provider: "{{ provider }}"
@@ -39,7 +39,7 @@
     if_name: ethernet1/6
     gathered_filter: if_name
 
-- name: interfaces | Add ethernet1/7 to zone mgt
+- name: interfaces | Add ethernet1/10 to zone mgt
   when: palo_config_initial_interface and palo_physical
   paloaltonetworks.panos.panos_interface:
     provider: "{{ provider }}"
@@ -58,7 +58,7 @@
     zone_name: "{{ override_nic | default(item.value.zone) }}"
     if_name: "{{ item.key }}"
     gathered_filter: if_name
-  loop: "{{ palo_zone.zones | dict2items }}"
+  loop: "{{ palo_zones | dict2items }}"
 
 - name: interfaces | Ansible.builtin.set_fact
   when: palo_config_initial_interface

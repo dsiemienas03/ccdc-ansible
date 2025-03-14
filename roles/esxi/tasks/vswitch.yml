@@ -14,7 +14,7 @@
       mac_changes: true
       forged_transmits: true
 
-- name: vswitch | Add Portgroup with all settings defined {{ new_net }}
+- name: vswitch | Add Portgroup {{ new_net }}
   delegate_to: localhost
   community.vmware.vmware_portgroup:
     esxi_hostname: "{{ inventory_hostname }}"

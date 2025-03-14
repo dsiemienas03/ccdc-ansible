@@ -1,9 +1,8 @@
 ---
-- name: Prep for palo
+- name: Get VMs
   hosts: esxi
-  # ignore_errors: true
+  ignore_errors: true
   gather_facts: false
-  connection: local
   roles:
     - dsu.ccdc.esxi
   vars:
@@ -14,15 +13,6 @@
     - name: Import vars
       ansible.builtin.include_vars:
         dir: /home/ansible/vars/
-
-    - name: Create vSwitch
-      when: esxi_vswitches is defined
-      ansible.builtin.include_role:
-        name: dsu.ccdc.esxi
-        tasks_from: vswitch
-      loop: "{{ esxi_vswitches }}"
-      loop_control:
-        loop_var: new_net
 
     - name: Get all vm info
       delegate_to: localhost

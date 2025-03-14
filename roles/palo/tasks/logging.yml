@@ -36,6 +36,7 @@
     log_type: traffic
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
+    send_to_panorama: true
 
 - name: logging | Create log forwarding profile match list threat
   paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -47,6 +48,8 @@
     log_type: threat
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
+    send_to_panorama: true
+
 
 - name: logging | Create log forwarding profile match list for wildfire
   paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -58,6 +61,7 @@
     log_type: wildfire
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
+    send_to_panorama: true
 
 - name: logging | Create log forwarding profile match list for URL
   paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -69,6 +73,7 @@
     log_type: url
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
+    send_to_panorama: true
 
 - name: logging | Create log forwarding profile match list for data
   paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -80,6 +85,7 @@
     log_type: data
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
+    send_to_panorama: true
 
 - name: logging | Create log forwarding profile match list for GTP
   paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -91,6 +97,7 @@
     log_type: gtp
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
+    send_to_panorama: true
 
 - name: logging | Create log forwarding profile match list for tunnel
   paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -102,6 +109,7 @@
     log_type: tunnel
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
+    send_to_panorama: true
 
 - name: logging | Create log forwarding profile match list for auth
   paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -113,6 +121,7 @@
     log_type: auth
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
+    send_to_panorama: true
 
 - name: logging | Create log forwarding profile match list for SCTP
   paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -124,6 +133,7 @@
     log_type: sctp
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
+    send_to_panorama: true
 
 - name: logging | Create log forwarding profile match list for decryption
   paloaltonetworks.panos.panos_log_forwarding_profile_match_list:
@@ -135,6 +145,7 @@
     log_type: decryption
     filter: All Logs
     syslog_profiles: [wazzuh-profile]
+    send_to_panorama: true
 
 - name: logging | Set logging complete
   ansible.builtin.set_fact:
