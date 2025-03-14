@@ -3,7 +3,7 @@ name: Release Publish
 on:
   push:
     paths:
-      - "VERSION"
+      - "galaxy.yml"
     branches:
       - main
   # branches to consider in the event; optional, defaults to all
