@@ -12,7 +12,7 @@
     action: allow
     location: before
     existing_rule: inbound-all
-    group_profile: security
+    group_profile: service
     log_start: true
     log_end: true
     log_setting: Loggie McLog Face
