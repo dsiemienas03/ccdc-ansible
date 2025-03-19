@@ -12,6 +12,6 @@ pycparser==2.22
 pyOpenSSL==23.3.0
 pyVmomi==8.0.3.0.1
 requests==2.32.3
-setuptools==76.0.0
+setuptools==76.1.0
 urllib3==2.3.0
 xmltodict==0.12.0
