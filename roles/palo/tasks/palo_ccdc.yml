@@ -158,7 +158,7 @@
     source_zone: ["{{ alias.wan | default('wan') }}"]
     source_ip: [any]
     destination_zone: ["{{ alias.lan | default('lan') }}"]
-    destination_ip: ["{{ dns_server }}"]
+    destination_ip: ["{{ local_dns }}"]
     application: [ms-rdp]
     action: allow
     location: after
