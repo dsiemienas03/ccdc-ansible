@@ -47,7 +47,7 @@ jobs:
         #   config-name: my-config.yml
         # disable-autolabeler: false
         # current-version: ${{ steps.get_version.outputs.version }}
-          version: ${{ env.version }}
+          version: $NEXT_PATCH_VERSION
           name: ${{ env.version }}
           tag: ${{ env.version }}
         env:
