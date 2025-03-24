@@ -23,7 +23,7 @@
     device_group: "{{ device_group if device_group is defined else omit }}"
     name: service-splunk
     protocol: tcp
-    destination_port: ["8089", "9997"]
+    destination_port: "8089"
 
 # Service groups
 # Add web service group

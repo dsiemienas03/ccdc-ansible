@@ -36,7 +36,7 @@
     mode: layer2
     vlan_name: default
     zone_name: mgt
-    if_name: ethernet1/6
+    if_name: ethernet1/9
     gathered_filter: if_name
 
 - name: interfaces | Add ethernet1/10 to zone mgt
@@ -46,7 +46,7 @@
     mode: layer2
     vlan_name: default
     zone_name: mgt
-    if_name: ethernet1/7
+    if_name: ethernet1/10
     gathered_filter: if_name
 
 - name: interfaces | Config additional interfaces
