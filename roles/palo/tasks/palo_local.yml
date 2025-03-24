@@ -160,7 +160,7 @@
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: local-wazuh
-    source_zone: "{{ local_zones | list }}"
+    source_zone: "lan"
     source_ip: ["{{ lan_mask }}"]
     destination_zone: ["{{ wazuh_zone | default('lan') }}"]
     destination_ip: ["{{ wazuh }}"]
@@ -179,7 +179,7 @@
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: lan-splunk
-    source_zone: "{{ local_zones | list }}"
+    source_zone: "lan"
     source_ip: ["{{ lan_mask }}"]
     destination_zone: ["{{ splunk_zone | default('lan') }}"]
     destination_ip: ["{{ splunk }}"]
@@ -199,7 +199,7 @@
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
     rule_name: local-dns
-    source_zone: "{{ local_zones | default('lan') }}"
+    source_zone: "lan"
     source_ip: ["{{ lan_mask }}"]
     destination_zone:
       [
