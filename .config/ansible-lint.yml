@@ -17,6 +17,7 @@ exclude_paths:
   - changelogs/**
   - /**/cisco/**
   - /**/pfsense/**
+  - /**/wasabi_wall/**
   - /**beta.yml
   - /**/*beta.yml/**
   - /**/palo-beta.yml
@@ -113,7 +114,7 @@ extra_vars:
 # match list, first match determines the file kind.
 kinds:
   # - playbook: "**/examples/*.{yml,yaml}"
-  # - galaxy: "**/folder/galaxy.yml"
+  - galaxy: "**/folder/galaxy.yml"
   - tasks: "**/tasks/*.yml"
   - vars: "**/vars/*.yml"
   # - meta: "**/meta/main.yml"
