@@ -23,7 +23,7 @@ jobs:
       - name: Run ansible-lint
         uses: ansible/ansible-lint@v25.1.3 # or version tag instead of 'main'
         with:
-          args: ""
+          args: "-c ansible/.config/ansible-lint.yml"
           setup_python: false
           working_directory: ""
           requirements_file: requirements.yml
