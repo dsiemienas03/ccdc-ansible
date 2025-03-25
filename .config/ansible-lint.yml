@@ -17,7 +17,6 @@ exclude_paths:
   - changelogs/**
   - /**/cisco/**
   - /**/pfsense/**
-  - /**/wasabi_wall/**
   - /**beta.yml
   - /**/*beta.yml/**
   - /**/palo-beta.yml
