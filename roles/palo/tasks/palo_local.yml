@@ -141,7 +141,7 @@
     rule_name: "remote-splunk"
     source_zone: "{{ alias.wan | default('wan') }}"
     source_ip: "{{ remote_net }}"
-    destination_zone: ["{{ splunk_zone | list }}"]
+    destination_zone: ["{{ splunk_zone | default('lan') }}"]
     destination_ip: ["{{ splunk }}"]
     application: ["splunk", "web-browsing"]
     service: "service-splunk"
