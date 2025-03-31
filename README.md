@@ -31,7 +31,7 @@ Playbook | Description
 ### Palo
 Playbook | Description
 --- | ---
-`dsu.ccdc.palo.dynamic`| Runs dynamic updates
+`dsu.ccdc.palo.dynamicupdate`| Runs dynamic updates
 `dsu.ccdc.palo.get_rules` | Pulls rules off of the firewall
 `dsu.ccdc.palo.init` | Does an initial config
 `dsu.ccdc.palo.os_update` | Runs OS updates

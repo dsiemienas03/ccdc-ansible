@@ -240,3 +240,25 @@
     log_setting: Loggie McLog Face
     tag_name: [Service, local]
   loop: "{{ services.palo.esx | dict2items }}"
+
+
+- name: palo_local | Remote to DB
+  when: remote_net is defined
+  paloaltonetworks.panos.panos_security_rule:
+    provider: "{{ provider }}"
+    device_group: "{{ device_group if device_group is defined else omit }}"
+    rule_name: remote-db
+    source_zone: ["{{ alias.wan | default('wan') }}"]
+    source_ip: "{{ remote_net }}"
+    destination_zone: ["{{ alias.lan | default('lan') }}"]
+    destination_ip: ["{{ local_db }}"]
+    application: [any]
+    action: allow
+    location: before
+    existing_rule: inbound-db
+    group_profile: security
+    disabled: true
+    log_start: true
+    log_end: true
+    log_setting: Loggie McLog Face
+    tag_name: [Service, local]
