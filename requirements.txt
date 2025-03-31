@@ -9,7 +9,7 @@ pan-python==0.17.0
 panos-upgrade-assurance==1.1.0
 pathlib==1.0.1
 pycparser==2.22
-pyOpenSSL==23.3.0
+pyOpenSSL==25.0.0
 pyVmomi==8.0.3.0.1
 requests==2.32.3
 setuptools==78.1.0
