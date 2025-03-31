@@ -37,5 +37,5 @@
 
 - name: snapshot | Print snapshot info
   ansible.builtin.debug:
-    var: snapshot_info
+    VM_NAME: "{{ snapshot_info.guest_name }}"
   loop: "{{ vm_info.virtual_machines | list }}"

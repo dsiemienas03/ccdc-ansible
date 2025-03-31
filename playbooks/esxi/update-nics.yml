@@ -1,7 +1,7 @@
 ---
-- name: ESXI full configuration
+- name: ESXI update NICs
   hosts: esxi
-  # ignore_errors: true
+  ignore_errors: true
   gather_facts: false
   roles:
     - dsu.ccdc.esxi
@@ -9,16 +9,6 @@
   # esxi_user: root
   # strategy: free
   connection: local
-  vars:
-    new_net:
-      - lan
-      - lan3
-      - lan4
-      - lan5
-      - lan6
-      - lan7
-      - lan8
-      - mgt
 
   tasks:
     - name: Import vars
@@ -38,5 +28,4 @@
           - name: "{{ item.value.network | default('lan') }}"
       register: new_nic
       delegate_to: localhost
-
       loop: "{{ esxi_vms | dict2items }}"

@@ -31,7 +31,7 @@ jobs:
           fetch-depth: 2
       - name: Get version
         id: get_version
-        run: echo "version=$(cat VERSION)" >> $GITHUB_ENV
+        run: echo version=$(awk '/version:/ { pos=match($2, /[0-9]+\.[0-9]+\.[0-9]+/); print substr($2, pos, RLENGTH); }' galaxy.yml) >> $GITHUB_ENV
       - name: Sanity check
         run: |
           echo "Version: ${{ env.version }}"
@@ -47,7 +47,7 @@ jobs:
         #   config-name: my-config.yml
         # disable-autolabeler: false
         # current-version: ${{ steps.get_version.outputs.version }}
-          version: ${{ env.version }}
+          version: $NEXT_PATCH_VERSION
           name: ${{ env.version }}
           tag: ${{ env.version }}
         env:

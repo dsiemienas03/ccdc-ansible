@@ -1,8 +1,9 @@
 ---
-- name: Prep for palo
+- name: Prep ESXI for Firewall implementation
   hosts: esxi
-  # ignore_errors: true
+  ignore_errors: true
   gather_facts: false
+  connection: local
   roles:
     - dsu.ccdc.esxi
   vars:
@@ -23,24 +24,24 @@
       loop_control:
         loop_var: new_net
 
-    - name: Palo NIC
-      community.vmware.vmware_guest:
+    - name: Get all vm info
+      delegate_to: localhost
+      community.vmware.vmware_vm_info:
         hostname: "{{ inventory_hostname }}"
         username: "{{ esxi_user }}"
         password: "{{ esxi_password }}"
         validate_certs: false
-        name: "Palo"
-        # name: test
-        networks:
-          - name: "{{ default_net | default('VM Network') }}"
-          - name: "{{ default_net | default('VM Network') }}"
-          - name: "lan"
-          - name: "lan3"
-          - name: "lan4"
-          - name: "lan5"
-          - name: "lan6"
-          - name: "lan7"
-          - name: "lan8"
-          - name: "mgt"
-      register: new_nic
+      register: vm_info
+
+    - name: Print VM info
+      ansible.builtin.debug:
+        var: vm_info
+
+    - name: Export VM info to file
       delegate_to: localhost
+      ansible.builtin.template:
+        src: esxi.j2
+        dest: /home/ansible/vars/{{ inventory_hostname }}.yml
+        owner: ansible
+        group: ansible
+        mode: "0644"
