@@ -1,7 +1,7 @@
 ---
-- name: Prep for palo
+- name: Prep ESXI for Firewall implementation
   hosts: esxi
-  # ignore_errors: true
+  ignore_errors: true
   gather_facts: false
   connection: local
   roles:

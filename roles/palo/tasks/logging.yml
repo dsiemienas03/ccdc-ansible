@@ -16,6 +16,7 @@
     name: splunk-profile
 
 - name: logging | Create syslog server
+  when: splunk is defined
   paloaltonetworks.panos.panos_syslog_server:
     provider: "{{ provider }}"
     device_group: "{{ device_group if device_group is defined else omit }}"
