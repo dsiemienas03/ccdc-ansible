@@ -3,7 +3,7 @@ name: Release Publish
 on:
   push:
     paths:
-      - "VERSION"
+      - "galaxy.yml"
     branches:
       - main
   # branches to consider in the event; optional, defaults to all
@@ -27,7 +27,7 @@ jobs:
           fetch-depth: 2
       - name: Get version
         id: get_version
-        run: echo "version=$(cat VERSION)" >> $GITHUB_ENV
+        run: echo version=$(awk '/version:/ { pos=match($2, /[0-9]+\.[0-9]+\.[0-9]+/); print substr($2, pos, RLENGTH); }' galaxy.yml) >> $GITHUB_ENV
       # (Optional) GitHub Enterprise requires GHE_HOST variable set
       # - name: Set GHE_HOST
       #  run: |

@@ -9,6 +9,7 @@
     provider:
       ip_address: "{{ inventory_hostname }}"
       api_key: "{{ api_key }}"
+    override_nic: lan
 
     # palo_update_os: true
     # palo_config_initial_interface: false
@@ -58,8 +59,8 @@
           Update Other: "{{ palo_config_update_other | default(omit) }}"
           Update OS: "{{ palo_update_os }}"
 
-    - name: Confirm config
-      ansible.builtin.pause:
+    # - name: Confirm config
+    #   ansible.builtin.pause:
 
     - name: Set dns and panorama
       when: local_dns is defined
@@ -87,6 +88,19 @@
         palo_config_update_other: false
         cacheable: true
       when: palo_config_update_other
+
+    # Logging
+    - name: Add logging
+      ansible.builtin.import_role:
+        name: dsu.ccdc.palo
+        tasks_from: logging
+      when: palo_config_logging
+
+    - name: Set logging complete
+      ansible.builtin.set_fact:
+        palo_config_logging: false
+        cacheable: true
+      when: palo_config_logging
 
     # Zones
     - name: Add Zones
@@ -126,19 +140,6 @@
         palo_config_initial_groups: false
         cacheable: true
       when: palo_config_initial_groups
-
-    # Logging
-    - name: Add logging
-      ansible.builtin.import_role:
-        name: dsu.ccdc.palo
-        tasks_from: logging
-      when: palo_config_logging
-
-    - name: Set logging complete
-      ansible.builtin.set_fact:
-        palo_config_logging: false
-        cacheable: true
-      when: palo_config_logging
 
     # Firewall rules
     - name: Add CCDC firewall Rules

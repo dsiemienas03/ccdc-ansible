@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4.2.2
 
       - name: Setup python
-        uses: actions/setup-python@v5.4.0
+        uses: actions/setup-python@v5.5.0
         with:
           python-version: "3.12"
           cache: "pip"
@@ -21,9 +21,9 @@ jobs:
       - run: pip install -r requirements.txt
 
       - name: Run ansible-lint
-        uses: ansible/ansible-lint@v25.1.2 # or version tag instead of 'main'
+        uses: ansible/ansible-lint@v25.1.3 # or version tag instead of 'main'
         with:
-          args: ""
+          args: "-c .config/ansible-lint.yml"
           setup_python: false
           working_directory: ""
           requirements_file: requirements.yml
