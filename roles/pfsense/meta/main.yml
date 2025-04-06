@@ -2,7 +2,8 @@ galaxy_info:
   author: David Siemienas
   description: Cyber Nerd
   company: DSU CCDC Team
-
+  namespace: dsu
+  role_name: pfsense
   # If the issue tracker for your role is not on github, uncomment the
   # next line and provide a value
   issue_tracker_url: https://github.com/dsiemienas03/ccdc-ansible/issues
