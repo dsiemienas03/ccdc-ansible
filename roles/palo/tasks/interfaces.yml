@@ -55,7 +55,7 @@
     provider: "{{ provider }}"
     mode: layer2
     vlan_name: default
-    zone_name: "{{ override_nic | default(item.value.zone) }}"
+    zone_name: "{{ item.value.zone | default(override_nic) }}"
     if_name: "{{ item.key }}"
     gathered_filter: if_name
   loop: "{{ palo_zones | dict2items }}"
