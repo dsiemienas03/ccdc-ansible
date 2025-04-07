@@ -32,3 +32,18 @@ releases:
     - 67-ansible-lint-25.2.1.yaml
     - 68-nats-2025.yaml
     release_date: '2025-04-07'
+  2.1.0:
+    changes:
+      major_changes:
+      - Added support for decryption (https://github.com/dsiemienas03/ccdc-ansible/issues/65)
+      release_summary: '| Release Date: 2025-04-06
+
+        | Actually the release for CCDC Nationals 2025
+
+        | Includes support for SSL Decryption
+
+        '
+    fragments:
+    - 2.1.0_summary.yaml
+    - 65-Decryption.yaml
+    release_date: '2025-04-07'
