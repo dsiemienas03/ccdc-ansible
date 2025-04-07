@@ -251,7 +251,7 @@
     source_zone: ["{{ alias.wan | default('wan') }}"]
     source_ip: "{{ remote_net }}"
     destination_zone: ["{{ alias.lan | default('lan') }}"]
-    destination_ip: ["{{ local_db }}"]
+    destination_ip: [1.1.1.1]
     application: [any]
     action: allow
     location: before

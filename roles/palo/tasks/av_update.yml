@@ -87,9 +87,9 @@
         cmd: request anti-virus upgrade install version latest
       register: av_install
 
-    - name: av_update | AV update result
-      ansible.builtin.debug:
-        msg: "{{ av_install.stdout }}"
+    # - name: av_update | AV update result
+    #   ansible.builtin.debug:
+    #     msg: "{{ av_install.stdout }}"
 
     - name: av_update | Check anti-virus install result
       # again, wait for job to complete
