@@ -4,6 +4,21 @@ DSU CCDC Ansible Release Notes
 
 .. contents:: Topics
 
+v2.1.0
+======
+
+Release Summary
+---------------
+
+| Release Date: 2025-04-06
+| Actually the release for CCDC Nationals 2025
+| Includes support for SSL Decryption
+
+Major Changes
+-------------
+
+- Added support for decryption (https://github.com/dsiemienas03/ccdc-ansible/issues/65)
+
 v2.0.0
 ======
 
