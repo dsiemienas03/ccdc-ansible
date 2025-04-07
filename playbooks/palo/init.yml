@@ -9,7 +9,7 @@
     provider:
       ip_address: "{{ inventory_hostname }}"
       api_key: "{{ api_key }}"
-    override_nic: lan
+    # override_nic: lan
 
     # palo_update_os: true
     # palo_config_initial_interface: false
