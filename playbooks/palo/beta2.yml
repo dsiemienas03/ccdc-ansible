@@ -2,7 +2,7 @@
 - name: Palo initial config
   hosts: palo
   connection: local
-  # ignore_errors: true
+  ignore_errors: true
   roles:
     - dsu.ccdc.palo
   vars:
