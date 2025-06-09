@@ -21,7 +21,7 @@ jobs:
       - run: pip install -r requirements.txt
 
       - name: Run ansible-lint
-        uses: ansible/ansible-lint@v25.2.1 # or version tag instead of 'main'
+        uses: ansible/ansible-lint@v25.5.0 # or version tag instead of 'main'
         with:
           args: "-c .config/ansible-lint.yml"
           setup_python: false
