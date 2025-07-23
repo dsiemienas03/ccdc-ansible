@@ -30,8 +30,3 @@
       loop: "{{ services.wr_block | dict2items }}"
       loop_control:
         loop_var: service
-
-    - name: Set base FW rules
-      ansible.builtin.import_role:
-        name: dsu.ccdc.wasabi_wall
-        tasks_from: wasabi_base
